@@ -1,0 +1,7 @@
+{
+  "name": "FinAI - Smart Finance",
+  "description": "Personal finance tracker with manual entry and AI-powered receipt scanning integration.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
