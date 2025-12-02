@@ -107,7 +107,7 @@ const LoginScreen = () => {
         <div className="mt-4 text-xs text-center text-slate-400">
            {isMockMode 
              ? "⚠️ Modo Demo Activo: No se requiere conexión a Supabase." 
-             : "Nota: Necesitas un proyecto Supabase configurado y las claves en lib/supabaseClient.ts"}
+             : "Nota: Necesitas un proyecto Supabase configurado y las claves en src/lib/supabaseClient.ts"}
         </div>
       </div>
     </div>
