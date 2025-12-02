@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { accountService } from '../services/accountService';
 import { transactionService } from '../services/transactionService';
-import { Account, AccountType } from '../types';
+import { AccountWithBalance, AccountType } from '../types';
 import { Wallet, TrendingUp, TrendingDown, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const Dashboard: React.FC = () => {
-  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [accounts, setAccounts] = useState<AccountWithBalance[]>([]);
   const [recentTx, setRecentTx] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -102,18 +102,18 @@ export const Dashboard: React.FC = () => {
                 <div key={tx.id} className="p-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
                   <div className="flex items-center gap-3">
                     <div className={`p-2 rounded-full ${
-                      tx.direction === 'ingreso' ? 'bg-green-100 text-green-600' : 
-                      tx.direction === 'gasto' ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'
+                      tx.type === 'ingreso' ? 'bg-green-100 text-green-600' : 
+                      tx.type === 'gasto' ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'
                     }`}>
-                      {tx.direction === 'ingreso' ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
+                      {tx.type === 'ingreso' ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
                     </div>
                     <div>
                       <p className="font-medium text-slate-800 text-sm">{tx.description}</p>
                       <p className="text-xs text-slate-500">{tx.accounts?.name} • {tx.date}</p>
                     </div>
                   </div>
-                  <span className={`font-mono font-medium ${tx.direction === 'ingreso' ? 'text-green-600' : 'text-slate-900'}`}>
-                    {tx.direction === 'ingreso' ? '+' : '-'}{formatCurrency(tx.amount)}
+                  <span className={`font-mono font-medium ${tx.type === 'ingreso' ? 'text-green-600' : 'text-slate-900'}`}>
+                    {tx.type === 'ingreso' ? '+' : '-'}{formatCurrency(tx.amount)}
                   </span>
                 </div>
               ))
