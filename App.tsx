@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { supabase, isMockMode } from './lib/supabaseClient';
 import { Layout } from './components/Layout';
 import { Dashboard } from './pages/Dashboard';
