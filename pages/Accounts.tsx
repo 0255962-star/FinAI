@@ -125,7 +125,7 @@ export const AccountsPage: React.FC = () => {
                   type="number" 
                   step="0.01"
                   className="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 outline-none"
-                  value={currentAccount.credit_limit || ''}
+                  value={currentAccount.credit_limit ?? ''}
                   onChange={e => setCurrentAccount({...currentAccount, credit_limit: parseFloat(e.target.value)})}
                 />
               </div>
