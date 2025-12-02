@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Camera, Table as TableIcon, Save, Trash2, ArrowRight } from 'lucide-react';
+import { Camera, Table as TableIcon, Save, Trash2 } from 'lucide-react';
 import { accountService } from '../services/accountService';
 import { transactionService } from '../services/transactionService';
 import { Account, TransactionDraft, TransactionType, NewTransactionPayload } from '../types';
@@ -13,7 +13,6 @@ export const TransactionRegister: React.FC = () => {
   const [loading, setLoading] = useState(false);
   
   // AI State
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   useEffect(() => {
@@ -44,7 +43,6 @@ export const TransactionRegister: React.FC = () => {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setSelectedFile(file);
       setIsAnalyzing(true);
       try {
         const aiDrafts = await transactionService.parseStatementImage(file);
