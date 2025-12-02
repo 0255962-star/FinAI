@@ -60,8 +60,8 @@ export const AccountsPage: React.FC = () => {
     loadAccounts();
   };
 
-  const creditLimitValue: string | number | undefined =
-    currentAccount.credit_limit ?? '';
+  const creditLimitValue: string | number =
+    currentAccount.credit_limit == null ? '' : currentAccount.credit_limit;
 
   return (
     <div className="space-y-6">
