@@ -9,7 +9,7 @@ export interface Account {
   bank?: string | null;
   type: AccountType;
   currency: string;
-  credit_limit?: number | null;
+  credit_limit?: number;
   initial_balance: number;
   is_active: boolean;
   color?: string | null;
