@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabaseClient';
-import { NewTransactionPayload, Transaction, TransactionDraft, TransactionType } from '../types';
+import { NewTransactionPayload, TransactionDraft, TransactionType } from '../types';
 
 const requireUserId = async () => {
   const { data, error } = await supabase.auth.getUser();
