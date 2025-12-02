@@ -10,6 +10,7 @@ export const AccountsPage: React.FC = () => {
     name: '',
     bank: '',
     type: AccountType.DEBIT,
+    currency: 'MXN',
     initial_balance: 0,
     credit_limit: 0,
     is_active: true
@@ -37,6 +38,7 @@ export const AccountsPage: React.FC = () => {
         name: '',
         bank: '',
         type: AccountType.DEBIT,
+        currency: 'MXN',
         initial_balance: 0,
         credit_limit: 0,
         is_active: true
