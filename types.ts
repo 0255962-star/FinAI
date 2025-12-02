@@ -1,58 +1,56 @@
-export enum AccountType {
-  DEBIT = 'debito',
-  CREDIT = 'credito',
-  SAVINGS = 'ahorro',
-  OTHER = 'otro'
-}
+import type {
+  Account as SupabaseAccount,
+  AccountWithBalance as SupabaseAccountWithBalance,
+  Category as SupabaseCategory,
+  Transaction as SupabaseTransaction,
+} from './src/types/finia';
 
-export enum TransactionDirection {
-  EXPENSE = 'gasto',
-  INCOME = 'ingreso',
-  TRANSFER_OUT = 'traspaso_salida',
-  TRANSFER_IN = 'traspaso_entrada'
-}
+export const AccountType = {
+  DEBIT: 'debito',
+  CREDIT: 'credito',
+  SAVINGS: 'ahorro',
+  CASH: 'efectivo',
+  OTHER: 'otro',
+} as const;
+export type AccountType = typeof AccountType[keyof typeof AccountType];
 
-export interface Account {
-  id: string;
-  user_id: string;
-  name: string;
-  bank: string;
-  type: AccountType;
-  credit_limit?: number;
-  initial_balance: number;
-  is_active: boolean;
-  created_at: string;
-  // Computed on client/service side
-  current_balance?: number;
-}
+export const CategoryType = {
+  EXPENSE: 'gasto',
+  INCOME: 'ingreso',
+  MIXED: 'mixto',
+} as const;
+export type CategoryType = typeof CategoryType[keyof typeof CategoryType];
 
-export interface Transaction {
-  id: string;
-  user_id: string;
-  account_id: string;
-  related_account_id?: string;
-  date: string; // ISO date string
-  description: string;
-  amount: number;
-  direction: TransactionDirection;
-  created_at?: string;
-}
+export const TransactionType = {
+  EXPENSE: 'gasto',
+  INCOME: 'ingreso',
+  TRANSFER_OUT: 'traspaso_salida',
+  TRANSFER_IN: 'traspaso_entrada',
+} as const;
+export type TransactionType = typeof TransactionType[keyof typeof TransactionType];
+
+export type Account = SupabaseAccount;
+export type Category = SupabaseCategory;
+export type Transaction = SupabaseTransaction;
+export type AccountWithBalance = SupabaseAccountWithBalance;
 
 export interface NewTransactionPayload {
   date: string;
-  description: string;
+  description?: string;
   amount: number;
-  direction: TransactionDirection;
+  type: TransactionType;
   account_id: string;
+  category_id?: string;
   related_account_id?: string;
 }
 
 export interface TransactionDraft {
-  id: string; // Temporary ID for UI
+  id: string; // temporary ID for UI rows
   date: string;
-  description: string;
+  description?: string;
   amount: number;
-  direction: TransactionDirection;
+  type: TransactionType;
   account_id: string;
+  category_id?: string;
   related_account_id?: string;
 }
