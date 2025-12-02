@@ -51,7 +51,10 @@ export const AccountsPage: React.FC = () => {
   };
 
   const handleEdit = (acc: Account) => {
-    setCurrentAccount(acc);
+    setCurrentAccount({
+      ...acc,
+      credit_limit: acc.credit_limit ?? undefined
+    });
     setIsEditing(true);
   };
 
