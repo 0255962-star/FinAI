@@ -99,7 +99,7 @@ export const AccountsPage: React.FC = () => {
                 type="text" 
                 required
                 className="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 outline-none"
-                value={currentAccount.bank}
+                value={currentAccount.bank ?? ''}
                 onChange={e => setCurrentAccount({...currentAccount, bank: e.target.value})}
                 placeholder="Ej. Banorte"
               />
