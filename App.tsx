@@ -72,7 +72,12 @@ const LoginScreen = () => {
       return;
     }
 
-    const { error } = await supabase.auth.signInWithOtp({ email });
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${window.location.origin}/`,
+      },
+    });
     if (error) alert(error.message);
     else alert('¡Revisa tu correo para el link de acceso!');
     setLoading(false);
