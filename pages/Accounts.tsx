@@ -60,6 +60,9 @@ export const AccountsPage: React.FC = () => {
     loadAccounts();
   };
 
+  const creditLimitValue: string | number | undefined =
+    currentAccount.credit_limit ?? '';
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -125,11 +128,7 @@ export const AccountsPage: React.FC = () => {
                   type="number" 
                   step="0.01"
                   className="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 outline-none"
-                  value={
-                    currentAccount.credit_limit === null || currentAccount.credit_limit === undefined
-                      ? ''
-                      : String(currentAccount.credit_limit)
-                  }
+                  value={creditLimitValue}
                   onChange={e => {
                     const val = e.target.value;
                     setCurrentAccount({
