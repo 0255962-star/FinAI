@@ -6,7 +6,7 @@ export interface Account {
   id: string;
   user_id: string;
   name: string;
-  bank?: string | null;
+  bank?: string;
   type: AccountType;
   currency: string;
   credit_limit?: number;
