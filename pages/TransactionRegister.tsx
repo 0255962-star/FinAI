@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Camera, Table as TableIcon, Save, Trash2, ArrowRight } from 'lucide-react';
 import { accountService } from '../services/accountService';
 import { transactionService } from '../services/transactionService';
-import { Account, TransactionDraft, TransactionDirection, NewTransactionPayload } from '../types';
+import { Account, TransactionDraft, TransactionType, NewTransactionPayload } from '../types';
 import { useNavigate } from 'react-router-dom';
 
 export const TransactionRegister: React.FC = () => {
@@ -28,7 +28,7 @@ export const TransactionRegister: React.FC = () => {
       date: new Date().toISOString().split('T')[0],
       description: '',
       amount: 0,
-      direction: TransactionDirection.EXPENSE,
+      type: TransactionType.EXPENSE,
       account_id: accounts[0]?.id || '',
     }]);
   };
@@ -79,7 +79,7 @@ export const TransactionRegister: React.FC = () => {
         date: d.date,
         description: d.description,
         amount: d.amount,
-        direction: d.direction,
+        type: d.type,
         account_id: d.account_id,
         related_account_id: d.related_account_id
       }));
@@ -217,10 +217,10 @@ export const TransactionRegister: React.FC = () => {
                     </td>
                     <td className="p-2">
                       <select 
-                        value={row.direction}
+                        value={row.type}
                         onChange={(e) => {
-                          const val = e.target.value as TransactionDirection;
-                          updateDraft(row.id, 'direction', val);
+                          const val = e.target.value as TransactionType;
+                          updateDraft(row.id, 'type', val);
                           // Clear related account if not transfer
                           if (!val.includes('traspaso')) {
                             updateDraft(row.id, 'related_account_id', undefined);
@@ -228,13 +228,13 @@ export const TransactionRegister: React.FC = () => {
                         }}
                         className="w-full text-sm border-slate-300 rounded focus:ring-indigo-500 border p-1"
                       >
-                        <option value={TransactionDirection.EXPENSE}>Gasto</option>
-                        <option value={TransactionDirection.INCOME}>Ingreso</option>
-                        <option value={TransactionDirection.TRANSFER_OUT}>Traspaso (Salida)</option>
+                        <option value={TransactionType.EXPENSE}>Gasto</option>
+                        <option value={TransactionType.INCOME}>Ingreso</option>
+                        <option value={TransactionType.TRANSFER_OUT}>Traspaso (Salida)</option>
                       </select>
                     </td>
                     <td className="p-2">
-                      {row.direction === TransactionDirection.TRANSFER_OUT ? (
+                      {row.type === TransactionType.TRANSFER_OUT ? (
                         <select 
                           value={row.related_account_id || ''}
                           onChange={(e) => updateDraft(row.id, 'related_account_id', e.target.value)}
