@@ -22,7 +22,7 @@ export const TransactionsPage: React.FC = () => {
 
   useEffect(() => {
     load();
-  }, [location.pathname, location.state]);
+  }, [location.key, location.state]);
 
   useEffect(() => {
     const handleFocus = () => load();
