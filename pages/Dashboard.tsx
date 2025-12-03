@@ -28,7 +28,7 @@ export const Dashboard: React.FC = () => {
       }
     };
     fetchData();
-  }, [location.pathname, location.state]);
+  }, [location.key, location.state]);
 
   useEffect(() => {
     const handleFocus = () => {
