@@ -3,9 +3,10 @@ import { accountService } from '../services/accountService';
 import { transactionService } from '../services/transactionService';
 import { AccountWithBalance, AccountType } from '../types';
 import { Wallet, TrendingUp, TrendingDown, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Dashboard: React.FC = () => {
+  const location = useLocation();
   const [accounts, setAccounts] = useState<AccountWithBalance[]>([]);
   const [recentTx, setRecentTx] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,6 +27,16 @@ export const Dashboard: React.FC = () => {
       }
     };
     fetchData();
+  }, [location.state]);
+
+  useEffect(() => {
+    const handleFocus = () => {
+      // Refresh data when user returns to the tab
+      accountService.getAccountsWithBalance().then(setAccounts).catch(console.error);
+      transactionService.getRecentTransactions(5).then(setRecentTx).catch(console.error);
+    };
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
   }, []);
 
   const totalBalance = accounts
