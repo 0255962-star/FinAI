@@ -84,7 +84,7 @@ export const TransactionRegister: React.FC = () => {
 
       await transactionService.saveTransactions(payload);
       alert('Movimientos guardados correctamente');
-      navigate('/');
+      navigate('/', { state: { refreshedAt: Date.now() } });
     } catch (error) {
       alert('Error guardando movimientos');
       console.error(error);
