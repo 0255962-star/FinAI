@@ -102,17 +102,35 @@ export const transactionService = {
   },
 
   async getRecentTransactions(limit = 10) {
-     const { data, error } = await supabase
+    const userId = await requireUserId();
+    const { data, error } = await supabase
       .from('transactions')
       .select(`
         *,
         accounts (name)
       `)
+      .eq('user_id', userId)
       .order('date', { ascending: false })
       .order('created_at', { ascending: false })
       .limit(limit);
 
     if (error) throw error;
-    return data;
+    return data || [];
+  },
+
+  async listTransactionsForUser() {
+    const userId = await requireUserId();
+    const { data, error } = await supabase
+      .from('transactions')
+      .select(`
+        *,
+        accounts (name)
+      `)
+      .eq('user_id', userId)
+      .order('date', { ascending: false })
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return data || [];
   }
 };
