@@ -1,24 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { transactionService } from '../services/transactionService';
 import { TrendingUp, TrendingDown } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 export const TransactionsPage: React.FC = () => {
+  const location = useLocation();
   const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const load = async () => {
+    setLoading(true);
+    try {
+      const data = await transactionService.listTransactionsForUser();
+      setTransactions(data);
+    } catch (err) {
+      console.error('Failed to load transactions list', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-      try {
-        const data = await transactionService.listTransactionsForUser();
-        setTransactions(data);
-      } catch (err) {
-        console.error('Failed to load transactions list', err);
-      } finally {
-        setLoading(false);
-      }
-    };
     load();
+  }, [location.pathname, location.state]);
+
+  useEffect(() => {
+    const handleFocus = () => load();
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
   }, []);
 
   const formatCurrency = (val: number) =>
