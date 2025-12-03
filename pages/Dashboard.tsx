@@ -13,6 +13,7 @@ export const Dashboard: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const [accData, txData] = await Promise.all([
           accountService.getAccountsWithBalance(),
@@ -27,7 +28,7 @@ export const Dashboard: React.FC = () => {
       }
     };
     fetchData();
-  }, [location.state]);
+  }, [location.pathname, location.state]);
 
   useEffect(() => {
     const handleFocus = () => {
