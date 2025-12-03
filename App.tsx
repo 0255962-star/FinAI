@@ -5,6 +5,7 @@ import { Layout } from './components/Layout';
 import { Dashboard } from './pages/Dashboard';
 import { AccountsPage } from './pages/Accounts';
 import { TransactionRegister } from './pages/TransactionRegister';
+import { TransactionsPage } from './pages/Transactions';
 
 function App() {
   const [session, setSession] = useState<any>(null);
@@ -50,7 +51,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="accounts" element={<AccountsPage />} />
-          <Route path="transactions" element={<div className="p-4 text-center text-slate-500">Listado completo próximamente... (Usa el Dashboard por ahora)</div>} />
+          <Route path="transactions" element={<TransactionsPage />} />
           <Route path="register" element={<TransactionRegister />} />
         </Route>
       </Routes>
