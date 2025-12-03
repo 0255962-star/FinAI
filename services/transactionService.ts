@@ -110,8 +110,8 @@ export const transactionService = {
         accounts (name)
       `)
       .eq('user_id', userId)
-      .order('date', { ascending: false })
       .order('created_at', { ascending: false })
+      .order('date', { ascending: false })
       .limit(limit);
 
     if (error) throw error;
