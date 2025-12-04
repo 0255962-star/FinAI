@@ -1,12 +1,6 @@
 import { supabase } from '../lib/supabaseClient';
 import type { Category } from '../types/finia';
-
-const requireUserId = async () => {
-  const { data, error } = await supabase.auth.getUser();
-  if (error) throw error;
-  if (!data?.user) throw new Error('User not authenticated');
-  return data.user.id;
-};
+import { requireUserId } from '../lib/userSession';
 
 export async function createCategory(
   payload: Omit<Category, 'id' | 'user_id' | 'created_at'>
