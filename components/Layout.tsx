@@ -1,9 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { LayoutDashboard, CreditCard, Receipt, PlusCircle, LogOut, AlertTriangle } from 'lucide-react';
+import { Session } from '@supabase/supabase-js';
 import { supabase, isMockMode } from '../lib/supabaseClient';
 
 export const Layout: React.FC = () => {
+  const [session, setSession] = useState<Session | null>(null);
+  const [loadingSession, setLoadingSession] = useState(true);
+
+  useEffect(() => {
+    if (isMockMode) {
+      setSession({ user: { id: 'demo-user-id', email: 'demo@finai.app' } } as Session);
+      setLoadingSession(false);
+      return;
+    }
+
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        setSession(data.session);
+      })
+      .finally(() => setLoadingSession(false));
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      setSession(nextSession);
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
+
   const handleLogout = async () => {
     if (!isMockMode) {
       await supabase.auth.signOut();
@@ -17,6 +44,22 @@ export const Layout: React.FC = () => {
     { to: '/transactions', label: 'Movimientos', icon: <Receipt size={20} /> },
     { to: '/register', label: 'Registrar', icon: <PlusCircle size={20} /> },
   ];
+
+  if (loadingSession) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-slate-50 text-slate-500">
+        Validando sesión...
+      </div>
+    );
+  }
+
+  if (!session && !isMockMode) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-slate-50 text-slate-500">
+        No hay sesión activa.
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-slate-50 text-slate-900 font-sans">
