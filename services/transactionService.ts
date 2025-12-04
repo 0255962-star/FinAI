@@ -1,13 +1,6 @@
 import { supabase } from '../lib/supabaseClient';
 import { NewTransactionPayload, TransactionDraft, TransactionType } from '../types';
-
-const requireUserId = async () => {
-  const { data, error } = await supabase.auth.getUser();
-  console.log('[transactionService] user id', data?.user?.id ?? null);
-  if (error) throw error;
-  if (!data?.user) throw new Error('User not authenticated');
-  return data.user.id;
-};
+import { requireUserId } from '../src/lib/userSession';
 
 export const transactionService = {
   
